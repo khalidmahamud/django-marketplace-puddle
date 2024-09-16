@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+  Welcome
+{% endblock %}
+
+{% block content %}
+  <div class="flex flex-col gap-6">
+    <div class="p-6 bg-gray-100 rounded-xl">
+      <h2 class="mb-12 text-3xl text-center text-gray-700">Newest Items</h2>
+      <div class="grid grid-cols-3 gap-3">
+        {% for item in items %}
+          <div>
+            <a href="{% url 'item:detail' item.id %}">
+              <div>
+                <img src="{{ item.image.url }}" class="rounded-t-xl" alt="" />
+              </div>
+              <div class="p-6 bg-white rounded-b-xl">
+                <h2 class="text-2xl">{{ item.name }}</h2>
+                <p class="text-gray-400">Price: ৳{{ item.price }}</p>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="p-6 bg-gray-100 rounded-xl">
+      <h2 class="mb-12 text-3xl text-center text-gray-700">Categories</h2>
+      <div class="grid grid-cols-3 gap-3">
+        {% for category in categories %}
+          <div>
+            <a href="#">
+              <div class="p-6 bg-white rounded-b-xl">
+                <h2 class="text-2xl">{{ category.name }}</h2>
+                <p class="text-gray-400">
+                  {{ category.items.count }} {% if category.items.count <= 1 %}
+                    Item
+                  {% else %}
+                    Items
+                  {% endif %}
+                </p>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
