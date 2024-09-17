@@ -1,3 +1,4 @@
+import random
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import LoginView
@@ -9,16 +10,19 @@ from .forms import SignUpForm, LoginForm
 
 
 def index(request):
-    items = Item.objects.filter(is_sold=False)[0:6]
+    items = Item.objects.filter(is_sold=False)
+    sampled_items = random.sample(list(items), min(6, len(items)))
     categories = Category.objects.all()
 
     return render(
-        request, "core/index.html", {"items": items, "categories": categories}
+        request,
+        "core/index.html",
+        {"items": sampled_items, "categories": categories},
     )
 
 
 def contact(request):
-    return render(request, "core/contact.html") 
+    return render(request, "core/contact.html")
 
 
 def signup(request):
