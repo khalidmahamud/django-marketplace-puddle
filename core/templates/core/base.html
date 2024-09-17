@@ -12,7 +12,7 @@
   </head>
   <body>
     <header class="border-b border-gray-200">
-      <nav class="max-w-7xl mx-auto p-6 flex justify-between items-center ">
+      <nav class="max-w-7xl mx-auto p-6 flex justify-between items-center">
         <a href="/" class="text-2xl font-semibold">Puddle</a>
         <ul class="flex space-x-6">
           <li>
@@ -21,18 +21,29 @@
           <li>
             <a href="#" class="text-lg font-semibold hover:text-gray-500">Browse</a>
           </li>
-
-          <li>
-            <a href="#" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign Up</a>
-          </li>
-          <li>
-            <a href="#" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Log In</a>
-          </li>
+          {% if request.user.is_authenticated %}
+            <li>
+              <a href="#" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Inbox</a>
+            </li>
+            <li>
+              <a href="#" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Dashboard</a>
+            </li>
+            <li>
+              <a href="{% url 'core:logout' %}" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Log Out</a>
+            </li>
+          {% else %}
+            <li>
+              <a href="{% url 'core:signup' %}" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign Up</a>
+            </li>
+            <li>
+              <a href="{% url 'core:login' %}" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Log In</a>
+            </li>
+          {% endif %}
         </ul>
       </nav>
     </header>
     <main class="max-w-7xl mx-auto">
-      <div class="py-12 px-6 ">
+      <div class="py-12 px-6">
         {% block content %}
 
         {% endblock %}
@@ -52,7 +63,7 @@
               <a href="#" class="text-lg text-teal-500 hover:text-teal-700">About</a>
             </li>
             <li>
-              <a href="{% url 'contact' %}" class="text-lg text-teal-500 hover:text-teal-700">Contact</a>
+              <a href="{% url 'core:contact' %}" class="text-lg text-teal-500 hover:text-teal-700">Contact</a>
             </li>
             <li>
               <a href="#" class="text-lg text-teal-500 hover:text-teal-700">Privacy Policy</a>
