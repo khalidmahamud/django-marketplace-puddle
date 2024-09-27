@@ -8,7 +8,7 @@
   <div class="flex flex-col gap-6">
     <div class="p-6 bg-gray-100 rounded-xl">
       <div class="grid grid-cols-5 gap-6">
-        <div class="col-span-3">
+        <div class="col-span-3 flex item-center">
           <img src="{{ item.image.url }}" class="rounded-xl" alt="" />
         </div>
         <div class="col-span-2 p-6 bg-gray-100 rounded-xl flex flex-col gap-1">
@@ -26,7 +26,15 @@
               {{ item.description|linebreaks }}
             </article>
           {% endif %}
-          <a href="#" class="inline-block mt-6 px-6 py-3 text-center text-lg font-semibold bg-teal-500 text-white hover:bg-teal-700 rounded-xl">Contact Seller</a>
+          {% if request.user == item.created_by %}
+            <div class="mt-6 p-6 bg-white rounded-xl">
+              <p>This is your item</p>
+              <a href="{% url 'item:edit' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit</a>
+              <a href="{% url 'item:delete' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete</a>
+            </div>
+          {% else %}
+            <a href="#" class="inline-block mt-6 px-6 py-3 text-center text-lg font-semibold bg-teal-500 text-white hover:bg-teal-700 rounded-xl">Contact Seller</a>
+          {% endif %}
         </div>
       </div>
     </div>
